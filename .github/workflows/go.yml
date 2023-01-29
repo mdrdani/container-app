@@ -32,3 +32,17 @@ jobs:
       with:
           push: true
           tags: cehamot/golang-apiserver:${{ github.run_number }}
+
+  provisioning-server:
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          docker pull cehamot/golang-apiserver:${{ github.run_number }}
+          docker rm -f apiserver
+          docker run --name apiserver -d -p 80:8144 cehamot/golang-apiserver:${{ github.run_number }}
