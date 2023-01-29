@@ -14,6 +14,7 @@ func main() {
 			"code":    200,
 			"message": "api server",
 			"server":  hostname,
+			"author": "M Dani Ramanda"
 		})
 	})
 	r.Run("0.0.0.0:8144")
